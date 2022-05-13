@@ -1,0 +1,271 @@
+/* -------------------------------------------------------------------------- */
+/*                              CUSTOM PROPERTIES                             */
+/* -------------------------------------------------------------------------- */
+:root {
+
+    /* Colors */
+    --primary-color: 256 34% 17%;
+    --primary-color-shade: 256 33% 15%;
+    --primary-color-tint: 257 21% 45%;
+    --secondary-color: 188 64% 55%;
+    --secondary-color-shade: 188 52% 48%;
+    --success-color: 173 52% 44%;
+    --error-color: 312 100% 40%;
+    --text-color: 245 9% 75%;
+    --white-color: 0 0% 100%;
+
+    /* Font Familiy */
+    --text-font: 'Kanit', sans-serif;
+
+    /* Font Weights */
+    --fw-thin: 100;
+    --fw-regular: 400;
+    --fw-medium: 500;
+    --fw-bold: 700;
+
+    /* Border */
+    --br: .9375rem;
+    --br-full: 50%;
+
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   GLOBAL                                   */
+/* -------------------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    color: hsl(var(--white-color));
+    font-family: var(--text-font);
+    font-weight: var(--fw-light);
+    margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: var(--heading-font);
+    margin: 0;
+}
+
+p {
+    margin: 0;
+}
+
+img,
+picture {
+    max-width: 100%;
+    display: block;
+}
+
+main,
+section {
+    position: relative;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: .625em;
+}
+::-webkit-scrollbar-track {
+    background-color: hsl(var(--primary-color-shade) / .9);
+}
+::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--primary-color-tint));
+    border-radius: var(--br);
+}
+
+
+/* -------------------------------------------------------------------------- */
+/*                                 COMPONENTS                                 */
+/* -------------------------------------------------------------------------- */
+
+/* Main Wrapper */
+.main-wrapper {
+    background-image: url('../img/main-bg-superhero.png');
+    background-size: cover;
+    background-position: center center;
+    height: 100vh;
+    height: auto;
+    width: 100%;
+    padding: 2.5rem;
+    position: relative;
+}
+
+/* Inner Wrapper */
+.inner-wrapper {
+    background-color: hsl(var(--primary-color) / .3);
+    backdrop-filter: blur(.875rem);
+    border-radius: var(--br);
+    height: 100%;
+    width: 100%;
+    padding: 3.125rem 9.375rem 6.25rem;
+}
+
+/* Header */
+.header {
+    background-color: hsl(var(--white-color) / .3 );
+    border-radius: var(--br);
+    display: flex;
+    height: 6.875rem;
+    margin-bottom: 2.5rem;
+    padding-inline: 1.875rem;
+}
+.nav {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.nav__logo a {
+    color: hsl(var(--white-color));
+    font-size: 1.625rem;
+    font-weight: var(--fw-bold);
+    position: relative;
+    text-decoration: none;
+}
+.nav__logo a::before {
+    content: url(../img/logo-element.png);
+    left: 0;
+    top: -10px;
+    opacity: .4;
+    position: absolute;
+}
+
+.nav__list {
+    display: flex;
+    gap: 1.875rem;
+    list-style-type: none;
+}
+.nav__list a {
+    color: hsl(var(--white-color));
+    font-size: 1.25rem;
+    text-decoration: none;
+}
+
+/* Main Title */
+.heading {
+    margin-bottom: 1.875rem;
+    width: 37.5rem;
+}
+.heading__title {
+    font-size: 60px;
+    letter-spacing: .125rem;
+    line-height: 1;
+    text-transform: uppercase;
+}
+.heading__description {
+    font-size: 20px;
+    font-weight: var(--fw-thin);
+}
+
+/* Search */
+.search {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .9375rem;
+    margin-top: 1.875rem;
+}
+.search__input,
+.search__button {
+    padding: .9375rem;
+    border: 0;
+    border-radius: .5rem;
+}
+.search__input {
+    flex: 3;
+}
+.search__input:focus {
+    outline: none;
+}
+.search__button {
+    color: hsl(var(--white-color));
+    cursor: pointer;
+    background-color: hsl(var(--secondary-color));
+    flex: 1;
+    font-size: 18px;
+    font-weight: var(--fw-bold);
+    transition: background .3s ease-in-out;
+}
+.search__button:hover,
+.search__button:focus {
+    background-color: hsl(var(--secondary-color-shade));
+}
+.search__error {
+    color: hsl(var(--error-color));
+    font-size: 1.125rem;
+    flex: 1 1 100%;
+}
+
+/* Hero Card */
+.heroes-content {
+    margin-top: 6.25rem;
+}
+.hero-card {
+    animation: intro-fade 1.2s .5s cubic-bezier(0.38, 0.97, 0.56, 0.76) forwards;
+    display: grid;
+    grid-template-columns: 120px 120px repeat(2, auto);
+    grid-template-rows: 2.5rem auto 2.5rem;
+    opacity: 0;
+    transform: translateY(10px);
+}
+.hero-card__image {
+    animation: intro-fade 1s 1.3s cubic-bezier(0.38, 0.97, 0.56, 0.76) forwards;
+    grid-column: 1 / 3;
+    grid-row: 2 / 3;
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    transform: translateX(10px);
+}
+.hero-card__image .shadow {
+    background-size: cover;
+    border-radius: var(--br);
+    filter: blur(15px);
+    bottom: -10px;
+    right: -10px;
+    height: 100%;
+    width: 100%;
+    opacity: .7;
+    position: absolute;
+    z-index: -1;
+}
+.hero-card__image img {
+    border-radius: var(--br);
+    position: relative;
+}
+.hero-card__content {
+    animation: intro-fade 1s 1.2s cubic-bezier(0.38, 0.97, 0.56, 0.76) forwards;
+    background-color: hsl(var(--primary-color-shade) / .7);
+    backdrop-filter: blur(10px);
+    border-radius: var(--br);
+    grid-column: 2 / 4;
+    grid-row: 1 / -1;
+    padding: 6.25rem 6.25rem 6.25rem 12.5rem;
+    opacity: 0;
+    transform: translateY(10px);
+}
+.hero-card__title {
+    font-size: 2rem;
+    letter-spacing: .0625rem;
+}
+.hero-card__desc {
+    font-weight: var(--fw-thin);
+}
+@keyframes intro-fade {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none;
+    }
+}
