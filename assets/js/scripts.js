@@ -16,6 +16,7 @@ function searchHero() {
     let searchVal = $('#searchInput').val()
     
     limpiaErrores()
+    limpiaCard()
 
     if ( valida(searchVal) == false ) {
         searchError('El valor ingresado no es valido!')
@@ -48,16 +49,101 @@ function limpiaErrores() {
     $('.search__error').remove()
 }
 
+// Limpio card
+function limpiaCard() {
+    $('.hero-card').remove()
+}
+
 // Obtengo Super Heroe
 function getHero(hero) {
     $.ajax({
         type: 'GET',
-        url: 'https://superheroapi.com/api/4905856019427443/'+hero,
+        url: 'https://www.superheroapi.com/api.php/4905856019427443/'+hero,
         success: function(response) {
             console.log(response)
+            $('#heroWrapper').append(generateCard(response))
+            generateGraphic(response)
         },
         error: function(error) {
             console.log(error)
         }
     })
+}
+
+// Genero card de super hero
+function generateCard(hero) {
+    let card = `
+        <div class="hero-card">
+            <div class="hero-card__image">
+                <img src="${hero.image.url}" alt="${hero.name}">
+                <div class="shadow" style="background-image:url(${hero.image.url})"></div>
+            </div>
+            <div class="hero-card__content">
+                <h3 class="hero-card__title">${hero.name}</h3>
+                <div class="hero-card__info">
+                    <div class="info-item"><span>Nombre real: </span>${hero.biography['full-name']}</div>
+                    <div class="info-item"><span>Lugar de nacimiento: </span>${hero.biography['place-of-birth']}</div>
+                    <div class="info-item"><span>Raza: </span>${hero.appearance['race']}</div>
+                    <div class="info-item"><span>Publicado por: </span>${hero.biography['publisher']}</div>
+                </div>
+                <div class="hero-card__desc">
+                    <p>${hero.connections['group-affiliation']}</p>
+                    <p>${hero.connections.relatives}</p>
+                </div>
+            </div>
+        </div>
+    `
+    return card
+}
+
+// Genero gráfico de estadísticas
+function generateGraphic(stats) {
+    CanvasJS.addColorSet("heroColors",
+            [
+                "#F9A52E",
+                "#F54241",
+                "#39B6C3",                
+                "#2A8A8D",
+                "#F65B28",
+                "#8CAFC2",                
+            ]);
+    var options = {
+        colorSet: "heroColors",
+        backgroundColor: null,
+        title: {
+            text: `Estadísticas de poder ${stats.name}`,
+            fontColor: "white",
+            fontFamily: "Kanit",
+            fontSize: 24,
+            fontWeight: "bold",
+            horizontalAlign: "center",
+        },
+        animationEnabled: true,
+        data: [{
+            type: "pie",
+            showInLegend: false,
+            startAngle: 40,
+            toolTipContent: "<b>{label}</b>: {y}%",
+            legendText: "{label}",
+            indexLabelFontSize: 14,
+            indexLabelFontColor: "white",
+            indexLabelFontFamily: "Kanit",
+            indexLabel: "{label} - {y}%",
+            dataPoints: statistics(stats.powerstats)
+        }]
+    };
+    $("#heroStatistics").CanvasJSChart(options);
+}
+
+// Recorro Estadisticas
+function statistics(list) {
+    let statsArr = []
+    for ( prop in list ) {
+        let statsObj = {
+            y: list[prop],
+            label: prop
+        }
+        statsArr.push(statsObj)
+    }
+    return statsArr
 }
