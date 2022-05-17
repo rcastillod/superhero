@@ -10,7 +10,7 @@
     --secondary-color: 188 64% 55%;
     --secondary-color-shade: 188 52% 48%;
     --success-color: 173 52% 44%;
-    --error-color: 312 100% 40%;
+    --error-color: 15 93% 50%;
     --text-color: 245 9% 75%;
     --white-color: 0 0% 100%;
 
@@ -85,6 +85,17 @@ section {
     border-radius: var(--br);
 }
 
+/* Error Element */
+.error {
+    animation: intro-fade 1s cubic-bezier(0.38, 0.97, 0.56, 0.76) forwards;
+    background-color: hsl(var(--error-color));
+    border-radius: .3125rem;
+    color: hsl(var(--white-color));
+    font-size: 1.125rem;
+    flex: 1 1 100%;
+    padding: .3125rem;
+    transform: translateY(10px)
+}
 
 /* -------------------------------------------------------------------------- */
 /*                                 COMPONENTS                                 */

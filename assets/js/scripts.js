@@ -15,19 +15,20 @@ $(function(){
 function searchHero() {
     let searchVal = $('#searchInput').val()
     
-    limpiaErrores()
-    limpiaCard()
+    limpiaErrores() // Limpio mensajes de error
+    limpiaCard() // Limpio el card cuando se crea una nueva búsqueda
 
+    // Valido si el valor ingresado corresponde a lo solicitado (solo números)
     if ( valida(searchVal) == false ) {
         searchError('El valor ingresado no es valido!')
     }
 
     // Ejecuto ajax
     getHero(searchVal)
-
+    $('#searchInput').val('')
 }
 
-// Valido que valor de input sea solo numérico
+// Valido que valor del input sea solo numérico
 function valida(val) {
     let pattern = /^\d{1,3}$/ // Valido que el valor ingresado sea solo numérico y con máximo de 3 dígitos
     if ( pattern.test(val) ) {
@@ -39,14 +40,14 @@ function valida(val) {
 // Despliego mensaje de error
 function searchError(text) {
     let searchWrapper = $('#search')
-    searchWrapper.append(`<p class="search__error">${text}</p>`)
+    searchWrapper.append(`<p class="error">${text}</p>`)
     $('#searchInput').val('')
     $('#searchInput').focus()
 }
 
 // Limpio errores
 function limpiaErrores() {
-    $('.search__error').remove()
+    $('.error').remove()
 }
 
 // Limpio card
@@ -55,17 +56,17 @@ function limpiaCard() {
 }
 
 // Obtengo Super Heroe
-function getHero(hero) {
+function getHero(id) {
     $.ajax({
         type: 'GET',
-        url: 'https://www.superheroapi.com/api.php/4905856019427443/'+hero,
+        url: 'https://www.superheroapi.com/api.php/4905856019427443/'+id,
         success: function(response) {
-            console.log(response)
             $('#heroWrapper').append(generateCard(response))
             generateGraphic(response)
         },
         error: function(error) {
-            console.log(error)
+            // Crear función para mostrar error de la peticion ajax
+            searchError('Oops! ha ocurrido un error, por favor inténtalo nuevamente')
         }
     })
 }
